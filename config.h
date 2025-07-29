@@ -29,7 +29,7 @@ static const int pseudotransparency = 0;
  *             0 = no border, 100 = border width is same as cell width */
 int borderperc = 20;
 #else
-static int borderpx = 2;
+static int borderpx = 4;
 #endif // RELATIVEBORDER_PATCH
 
 #if OPENURLONCLICK_PATCH
@@ -187,32 +187,36 @@ char *xdndescchar = " !\"#$&'()*;<>?[\\]^`{|}~";
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
+	"#32302f",
+	"#cc241d",
+	"#98971a",
+	"#d79921",
+	"#458588",
+	"#b16286",
+	"#689d6a",
+	"#a89984",
 
 	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+	"#928374",
+	"#fb4934",
+	"#b8bb26",
+	"#fabd2f",
+	"#83a598",
+	"#d3869b",
+	"#d3869b",
+	"#ebdbb2",
 
 	[255] = 0,
 
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#add8e6", /* 256 -> cursor */
-	"#555555", /* 257 -> rev cursor*/
-	"#000000", /* 258 -> bg */
-	"#e5e5e5", /* 259 -> fg */
+	"#ebdbb2", /* 256 -> cursor */
+	"#32302f", /* 257 -> rev cursor*/
+	"#32302f", /* 258 -> bg */
+	"#ebdbb2", /* 259 -> fg */
+	"#ebdbb2", /* 260 -> selectionfg */
+	"#665c54", /* 261 -> selectionbg */
+	"#32302f", /* 262 -> highlightfg */
+	"#fabd2f", /* 263 -> highlightbg */
 };
 
 
@@ -230,16 +234,16 @@ unsigned int defaultfg = 259;
 unsigned int defaultcs = 256;
 unsigned int defaultrcs = 257;
 #if SELECTION_COLORS_PATCH
-unsigned int selectionfg = 258;
-unsigned int selectionbg = 259;
+unsigned int selectionfg = 260;
+unsigned int selectionbg = 261;
 /* If 0 use selectionfg as foreground in order to have a uniform foreground-color */
 /* Else if 1 keep original foreground-color of each cell => more colors :) */
 static int ignoreselfg = 1;
 #endif // SELECTION_COLORS_PATCH
 #if KEYBOARDSELECT_PATCH && REFLOW_PATCH
 /* Foreground and background color of search results */
-unsigned int highlightfg = 15;
-unsigned int highlightbg = 160;
+unsigned int highlightfg = 262;
+unsigned int highlightbg = 263;
 #endif // KEYBOARDSELECT_PATCH
 
 #if BLINKING_CURSOR_PATCH
@@ -442,6 +446,8 @@ static Shortcut shortcuts[] = {
 	#if SCROLLBACK_PATCH
 	{ ShiftMask,            XK_Page_Up,     kscrollup,       {.i = -1}, S_PRI },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,     {.i = -1}, S_PRI },
+	{ MODKEY,               XK_k,           kscrollup,       {.i = 1}, S_PRI },
+	{ MODKEY,               XK_j,           kscrolldown,     {.i = 1}, S_PRI },
 	#endif // SCROLLBACK_PATCH
 	#if CLIPBOARD_PATCH
 	{ TERMMOD,              XK_Y,           clippaste,       {.i =  0} },
